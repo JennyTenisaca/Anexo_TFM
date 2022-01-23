@@ -9,5 +9,6 @@ Los notebooks, están renombrados como:
 2.	Modelos – ROSE OVER, 
 3.	Modelos – ROSE UNDER, 
 4.	Modelos – SIN BALANCEAR. 
+
 Adicionalmente, se incluye un script de R, en el cual se encuentra las tres diferentes técnicas de balanceo utilizadas en esta investigación. 
 Cabe recalcar que, al contar con una base de datos reservados, únicamente fueron publicados los notebooks y el script, más no la base de datos. 
