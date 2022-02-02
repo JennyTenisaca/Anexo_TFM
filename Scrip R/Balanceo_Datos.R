@@ -8,12 +8,19 @@ setwd("C:/Users/jenny/Documents/Data_final/Data TFM")
 #lectura base
 dir()
 Data_TFM_comp <- read.csv("Data_TFM_17122021_.csv", sep=";",dec = ".")
-##TRANSFORMAR A DUMMYS variables categóricas
-Dataset <- fastDummies::dummy_cols(Data_TFM_comp,  select_columns = c("sexo_f", "grupo_edad_UD", "Ultimo_Delito_f", "Region_UD_f", "Trabaja_f1", "Sit_Actual_f", "Estado_civil_UD_f", "Nivel_Instrucción_UD_f")) %>% 
-  select(-c("sexo_f", "grupo_edad_UD", "Ultimo_Delito_f", "Region_UD_f", "Trabaja_f1", "Sit_Actual_f", "Estado_civil_UD_f", "Nivel_Instrucción_UD_f"))
+Data_TFM_comp <- Dataset
+###CONVERTIR A FACTOR VARIABLE TARJET Y VARIABLES CATEGORICAS ORDINALES
+Dataset$Reincidencia <- factor(Dataset$Reincidencia, levels = c("No_Reincide", "Si_Reincide"))
+Dataset$sexo_f <- factor(Dataset$sexo_f, levels = c("Hombre", "Mujer"))
+Dataset$Trabaja_f1 <- factor(Dataset$Trabaja_f1, levels = c("No", "Si"))
+
+##TRANSFORMAR A DUMMYS VARIABLES CATEGÓRICAS NOMINALES
+Dataset <- fastDummies::dummy_cols(Data_TFM_comp,  select_columns = c("grupo_edad_UD", "Ultimo_Delito_f", "Region_UD_f", "Sit_Actual_f", "Estado_civil_UD_f", "Nivel_Instrucción_UD_f"),remove_first_dummy = TRUE) %>% 
+  select(-c("grupo_edad_UD", "Ultimo_Delito_f", "Region_UD_f", "Sit_Actual_f", "Estado_civil_UD_f", "Nivel_Instrucción_UD_f")) %>% 
+
 str(Dataset1)
-####
-Dataset1 <- Dataset%>%select(Reincidencia,Promedio_tiempo_reincidencia,Prom_Tiempo_sentencia_f,Sit_Actual_f_No_ingreso_CPL,Sit_Actual_f_Libre,Sit_Actual_f_Presente,Ultimo_Delito_f_Delito_CP,Ultimo_Delito_f_Delito_CV,Estado_civil_UD_f_Casado,grupo_edad_UD_Mayor_50,sexo_f_Mujer,sexo_f_Hombre,Estado_civil_UD_f_Soltero,Nivel_Instrucción_UD_f_Superior,Region_UD_f_Sierra,Ultimo_Delito_f_Delito_Sexual,Region_UD_f_Costa,Nivel_Instrucción_UD_f_Primaria,grupo_edad_UD_De_40_50,Ultimo_Delito_f_Delito_Drogas,grupo_edad_UD_De_18_23,grupo_edad_UD_De_24_29,Nivel_Instrucción_UD_f_Bachillerato,Trabaja_f1_No)
+#### SELECCIONAR LAS 24 VARIABLES TOTAL
+Dataset1 <- Dataset%>%select(Reincidencia, Promedio_tiempo_reincidencia, Prom_Tiempo_sentencia_f, Nivel_Instrucción_UD_f, grupo_edad_UD, Sit_Actual_f_No_ingreso_CPL, Sit_Actual_f_Libre, Sit_Actual_f_Presente, Sit_Actual_f_Otros_Fallecido_Fugado, Estado_civil_UD_f_Casado, Estado_civil_UD_f_Soltero, Estado_civil_UD_f_Viudo, Estado_civil_UD_f_Divorciado, sexo_f_Mujer, sexo_f_Hombre, Region_UD_f_Sierra, Region_UD_f_Costa, Region_UD_f_Oriente, Region_UD_f_Insular, Ultimo_Delito_f_Delito_Sexual, Ultimo_Delito_f_Delito_Drogas, Ultimo_Delito_f_Delito_CP, Ultimo_Delito_f_Delito_CV, Trabaja_f1_No, Trabaja_f1_Si)
 
 ## DIVIDIR CONJUNTO DE ENTRENAMIENTO Y TEST
 
